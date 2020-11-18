@@ -1,0 +1,108 @@
+
+
+Résumé des actions réalisées sous le shell de mangodb sous docker
+
+
+
+
+// lancer  docker mongodb la première fois
+sudo docker ps
+
+sudo docker run -d -p 27017:27017 -v ~/data-mongodb:/data/db --name mongodb mongo:4.2
+
+
+//  Relancer docker mongobd
+sudo docker exec -it mongodb mongo
+ou
+sudo docker start mongodb
+
+
+// Créer une BD avec mangoBD
+
+show dbs
+
+//Définir un nom de base de données 
+	use mynameDB
+
+
+// définir une collection myCollection
+ 
+db.users.myCollection( {username:"mynameDB"} )
+
+
+// CRÉER UNE COLLECTION
+
+La syntaxe de base de la commande createCollection() est la suivante:
+
+
+	db.createCollection(name, options)
+
+	db.createCollection("Produits")
+
+
+Insérer des documents dans MongoDB
+
+	db.collection.insert() 
+	
+Il existe également deux méthodes db.collection.update() et db.collection.save() utilisées dans le même but.use 
+
+// Insérer manuellement un document ds notre base à partir du shell mongoDB
+
+use SJob
+db.createCollection("ficheJob")
+db.ficheJob.insert(
+{
+	title : "Big Data Developer",
+	description : "FL-Tampa, Our client, one of the largest financial services firms, is seeking a Big Data Developer Location: Tampa, FL Position Type: Contract Job Responsibilities: -Gather various data points from multiple sources within and load to big data Hadoop solution. -Transform data into usable form per user requirements. -Implement proper controls to protect integrity of data and limit use of sensitive data to una",
+
+	link: "http://jobview.monster.com/Big-Data-Developer-Job-Tampa-FL-US-221978898.aspx",
+	guid: "221978898",
+	pubDate: "Thu, 12 Nov 2020 02:31:23 GMT"
+  }
+ )
+ 
+ db.ficheJob.insert(
+{
+	title : "Industrial Worker",
+	description : "NY-Big Flats, job summary: Multiple Industrial Workers are needed for a manufacturing company considered one of the world's leading innovators in materials science in the Big Flats, NY area. They will work under the direction of a supervisor, works with a team to operate and troubleshoot production equipment and perform product quality tests. location: Big Flats, New York job type: Contract salary: $15.00 - 16.",
+
+	link: "http://jobview.monster.com/Industrial-Worker-Job-Big-Flats-NY-US-221587756.aspx",
+	guid: "221152770",
+	pubDate: "Thu, 12 Nov 2020 00:06:54 GMT"
+  }
+ )
+ 
+ // lister les documents 
+ db.ficheJob.find()
+ 
+ 
+ db.ficheJob.insert(
+{
+	title : "Big Data Developer - II",
+	description : "NY-Garden City, Location: Garden City, NY Description: Our client is currently seeking a Big Data Developer - II Title: Big Data Developer Location: Garden City, NY Duration: 12+ Months What you?ll be doing. You will be part of a new Data Science team, ensuring that innovation drives continuous business improvements, bringing more profitable growth and an even better customer experience. As a Data Analytics/Predi",
+
+	link: "http://jobview.monster.com/Big-Data-Developer-II-Job-Garden-City-NY-US-221152770.aspx",
+	guid: "221152770",
+	pubDate: "Thu, 12 Nov 2020 00:14:37 GMT"
+  }
+ )
+ 
+ //indexer les champs titre et description
+ 
+ db.ficheJob.createIndex( { "title" : "text", "description": "text" } )
+ 
+ nous affiche le résultat suivant :
+ {
+	"createdCollectionAutomatically" : true,
+	"numIndexesBefore" : 1,
+	"numIndexesAfter" : 2,
+	"ok" : 1
+}
+
+// Rechercher indexer
+
+db.ficheJob.find( { $text: { $search: "Big Data programmer" }})
+
+ //quitter mongodb
+  exit()
+  
